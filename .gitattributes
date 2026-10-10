@@ -1,0 +1,2 @@
+# Preserve upstream vendor bytes, including their original license headers.
+assets/vendor/*.js -text -whitespace
