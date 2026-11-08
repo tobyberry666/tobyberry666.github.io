@@ -2,37 +2,135 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#201e28"><meta name="description" content="Toby 的个人空间。在读学生、编程与计算机爱好者，探索人机交互与情感计算。">
+  <meta name="theme-color" content="#F1EDE5"><meta name="description" content="Toby 的个人空间。在读学生、编程与计算机爱好者，探索人机交互与情感计算。">
   <title>Toby — 代码与感受</title><link rel="stylesheet" href="styles.css">
+  <link rel="preload" as="image" href="assets/images/portrait-900.webp" type="image/webp" imagesrcset="assets/images/portrait-560.webp 560w, assets/images/portrait-900.webp 900w, assets/images/portrait-1400.webp 1400w" imagesizes="(max-width: 780px) 92vw, 44vw">
   <script src="assets/vendor/gsap.min.js" defer></script><script src="assets/vendor/ScrollTrigger.min.js" defer></script><script src="app.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">跳到主要内容</a>
-  <header class="site-header"><a class="wordmark" href="#home" aria-label="Toby，回到首页">toby<span aria-hidden="true">✳</span></a><nav aria-label="主导航"><a href="#about">关于</a><a href="#work">作品</a><a href="#connect">连接 <span aria-hidden="true">↗</span></a></nav><span class="header-note mono" aria-hidden="true">A MIND IN MOTION</span></header>
+  <header class="site-header">
+    <a class="wordmark" href="#home" aria-label="Toby，回到首页">Toby<span aria-hidden="true">.</span></a>
+    <nav aria-label="主导航"><a href="#about">关于</a><a href="#feel">方向</a><a href="#work">作品</a><a href="#connect">连接 <span aria-hidden="true">↗</span></a></nav>
+    <span class="header-note mono" aria-hidden="true">A PERSONAL EXHIBITION</span>
+  </header>
   <main id="main" class="journey"><div class="viewport">
-    <div class="field" aria-hidden="true"><div class="field-ring"></div><span class="field-star">✳</span><span class="field-cross">+</span></div>
-    <div class="thread" aria-hidden="true"><svg viewBox="0 0 7000 1000" preserveAspectRatio="none"><path d="M-100 720C300 720 390 130 850 270S1430 980 1760 650S2030 100 2500 290S2900 900 3300 640S3720 180 4010 350S4530 880 4800 580S5300 80 5730 410S6270 900 6700 530S7000 250 7100 330"/></svg></div>
-    <div class="shared-orb" aria-hidden="true"><div class="orb-pointer"><div class="orb-breathe"><svg class="sculpture" viewBox="0 0 600 600" fill="none">
-              <defs><linearGradient id="coral" x1="152" y1="127" x2="464" y2="476" gradientUnits="userSpaceOnUse"><stop stop-color="#ffac8f"/><stop offset=".48" stop-color="#ef836e"/><stop offset="1" stop-color="#c95856"/></linearGradient></defs>
-              <g class="orbit-back" stroke="#b4a0d5" stroke-width="1.2" opacity=".6"><ellipse cx="302" cy="295" rx="265" ry="162" transform="rotate(-39 302 295)"/><ellipse cx="302" cy="295" rx="248" ry="144" transform="rotate(-39 302 295)"/></g>
-              <g class="feeling-shape"><path fill="url(#coral)" d="M333 126C401 109 463 155 478 223C493 291 453 318 447 369C440 428 386 470 322 466C269 463 245 433 204 419C143 399 112 352 125 290C136 238 182 226 198 184C218 132 273 106 333 126Z"/><path d="M221 327C238 385 326 409 379 347" stroke="#302331" stroke-width="17" stroke-linecap="round"/><path d="M228 264L228 285M336 248L336 269" stroke="#302331" stroke-width="17" stroke-linecap="round"/><path d="M217 162C242 143 271 138 294 144" stroke="#ffd8b5" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></g>
-              <g class="orbit-front" stroke="#c2aedf" stroke-width="1.5"><path d="M72 424C14 360 100 234 260 139C420 43 555 63 553 139"/><path d="M65 414C17 354 109 237 267 145C421 56 543 70 539 144" opacity=".45"/></g>
-              <g class="art-spark" fill="#d5e79b"><path d="M458 348L469 375L497 365L482 390L507 407L477 408L473 439L459 413L433 429L444 400L416 389L447 381Z"/></g>
-              <g class="art-bracket" stroke="#c4afe4" stroke-width="10" stroke-linecap="square"><path d="M121 148L83 179L116 213M473 214L511 183L478 149"/></g>
-              <circle cx="125" cy="421" r="12" fill="#c7b5e1"/><circle cx="497" cy="107" r="5" fill="#d5e79b"/>
-            </svg></div></div></div>
+    <div class="field" aria-hidden="true"><span class="field-rule"></span><span class="field-mark">✳</span></div>
+    <div class="seam" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <div class="rail">
-      <section class="scene scene-home" id="home" aria-labelledby="hero-title" tabindex="-1"><div class="scene-inner hero-copy"><p class="chapter-kicker mono"><i class="status-dot"></i> A PERSONAL PLAYGROUND</p><p class="eyebrow">你好，我是</p><h1 id="hero-title">Toby<span>.</span></h1><p class="hero-subtitle">让想法运行，<br>让技术有一点<span>温度。</span></p><a class="text-link" href="#about">进入我的世界 <span aria-hidden="true">↗</span></a></div><div class="orbit-words mono" aria-hidden="true"><span>CODE</span><span>FEELING</span><span>CURIOSITY</span></div><span class="scene-note mono">PROGRAMMING × AFFECTIVE COMPUTING</span></section>
-      <section class="scene scene-build" id="about" aria-labelledby="about-title" tabindex="-1"><div class="scene-inner about-copy"><p class="chapter-kicker mono">01 / FOLLOW THE CURIOSITY</p><h2 id="about-title">把<span class="accent-coral">好奇，</span><br>写成<span class="accent-lime">代码。</span></h2><p class="body-copy">我是 Toby，一名热爱编程与计算机的在读学生。喜欢拆解问题，也喜欢把日常需求写成小工具，在动手实践中学习。</p><div class="interest-tags"><span>写代码</span><span>做工具</span><span>拆解问题</span></div></div><div class="code-sculpture" aria-hidden="true"><span class="code-brace brace-left">{</span><div class="code-token mono">idea<span>→</span>build<span>→</span>repeat</div><span class="code-brace brace-right">}</span><span class="code-scribble">make it happen.</span></div><span class="scene-note mono">THINK → BUILD → LEARN → REPEAT</span></section>
-      <section class="scene scene-feel" id="feel" aria-labelledby="feel-title" tabindex="-1"><div class="scene-inner feel-copy"><p class="chapter-kicker mono">02 / HCI × AFFECTIVE COMPUTING</p><h2 id="feel-title">探索<span class="accent-lime">交互，</span><br>理解<span class="accent-lavender">感受。</span></h2><p class="body-copy">现在学习和研究<span class="accent-ink">人机交互（HCI）与情感计算</span>，关注交互体验，以及技术如何感知、理解和回应情绪。</p><p class="feel-aside">我的探索还在继续：读论文、拆解思路，<br>再把想法实现成小工具。</p><p class="scholarship-note">曾获校级二等奖学金</p></div><div class="emotion-art" aria-hidden="true"><div class="emotion-ring ring-one"></div><div class="emotion-ring ring-two"></div><div class="emotion-ring ring-three"></div><span class="emotion-symbol">~</span><span class="emotion-label mono">A LITTLE MORE HUMAN.</span><span class="emotion-dot"></span></div><a class="chapter-bridge text-link" href="#work">想法，开始成形 <span aria-hidden="true">↗</span></a></section>
-      <section class="scene scene-project scene-paper" id="work" aria-labelledby="paper-title" tabindex="-1"><div class="project-art paper-art" aria-hidden="true"><div class="project-tilt">
-          <div class="paper-window project-visual"><div class="window-bar"><span>↗ PAPER HIGHLIGHTS</span><span>arXiv / HTML</span></div><div class="paper-content"><span class="mock-kicker">READ BETWEEN THE LINES</span><div class="paper-title">A little more clarity.<br>A little less noise.</div><div class="mock-line long"></div><div class="mock-line"></div><div class="highlight-line coral-line"></div><div class="mock-line long"></div><div class="highlight-line lavender-line"></div><div class="mock-line"></div><div class="paper-tags"><span>问题</span><span>机制</span><span>证据</span><span>局限</span></div></div></div>
-          </div><span class="schematic mono">CONCEPT VIEW / 界面示意</span><span class="paper-star">✳</span>
-        </div><div class="scene-inner project-copy"><p class="chapter-kicker mono">03 / IDEAS BECOME THINGS</p><span class="project-number mono">01 / READING TOOL</span><h3 id="paper-title">Paper<br> Highlights<span aria-hidden="true">↗</span></h3><p class="body-copy">让论文阅读，多一点线索。面向 arXiv HTML 的浏览器扩展，配合兼容的模型 API，辅助识别问题、机制、证据与局限。</p><div class="project-tags"><span>浏览器扩展</span><span>论文阅读</span></div><a class="text-link" href="https://github.com/tobyberry666/paper-highlighter" target="_blank" rel="noopener noreferrer">查看项目 <span aria-hidden="true">↗</span></a></div><span class="scene-note mono">LESS NOISE. MORE UNDERSTANDING.</span></section>
-      <section class="scene scene-project scene-code" id="code" aria-labelledby="code-title" tabindex="-1"><div class="project-art code-art" aria-hidden="true"><div class="project-tilt"><div class="code-window project-visual"><div class="window-bar"><span>CODE VISUALIER</span><span>● ● ●</span></div><div class="code-content"><div class="code-lines"><div><span>1</span> <b>items</b> = [2, 4, 6]</div><div><span>2</span> total = 0</div><div class="active-code"><span>3</span> <em>for</em> item <em>in</em> items:</div><div><span>4</span> &nbsp; total += item</div></div><div class="snapshot"><span class="mono">VARIABLE SNAPSHOT</span><div class="variable"><span>item</span><strong>4</strong></div><div class="variable"><span>total</span><strong>6</strong></div></div></div><div class="code-steps"><span>01</span><i></i><span class="current">02</span><i></i><span>03</span><i></i><span>04</span></div></div></div><span class="schematic mono">CONCEPT VIEW / 执行过程示意</span></div><div class="scene-inner project-copy"><p class="chapter-kicker mono">04 / MAKE THE INVISIBLE VISIBLE</p><span class="project-number mono">02 / DEVELOPER TOOL</span><h3 id="code-title">Code<br> Visualier<span aria-hidden="true">↗</span></h3><p class="body-copy">不只看代码，也看看它如何运行。把执行步骤与变量快照放在一起，让变化更直观；Python 与 JavaScript 可在客户端运行。</p><div class="project-tags"><span>代码可视化</span><span>Python / JS</span></div><a class="text-link" href="https://github.com/tobyberry666/code-visualier" target="_blank" rel="noopener noreferrer">查看项目 <span aria-hidden="true">↗</span></a></div><span class="scene-note mono">ONE STEP AT A TIME.</span></section>
-      <section class="scene scene-project scene-vocab" id="vocab" aria-labelledby="vocab-title" tabindex="-1"><div class="project-art vocab-art" aria-hidden="true"><div class="project-tilt"><div class="vocab-ring"></div><div class="vocab-card project-visual"><div class="window-bar"><span>WORDS, ONE AT A TIME</span><span>↗</span></div><span class="vocab-category mono">A LITTLE DAILY PRACTICE</span><strong class="vocab-word">curiosity<span> /ˌkjʊəriˈɒsəti/</span></strong><p class="vocab-meaning">n. 好奇心；求知欲</p><div class="vocab-rule"></div><p class="vocab-sentence">Stay curious.<br>Keep discovering.</p><div class="vocab-bottom"><span>分级学习</span><span>FSRS 复习</span></div></div></div><span class="schematic mono">CONCEPT VIEW / 单词卡片示意</span><span class="vocab-asterisk">✳</span></div><div class="scene-inner project-copy"><p class="chapter-kicker mono">05 / SMALL STEPS, EVERY DAY</p><span class="project-number mono">03 / LEARNING TOOL</span><h3 id="vocab-title">IELTS<br> Graded Vocab<span aria-hidden="true">↗</span></h3><p class="body-copy">让词汇学习有自己的节奏。分级积累 IELTS 词汇，用 FSRS 安排复习，把记忆练习融入日常。</p><div class="project-tags"><span>词汇学习</span><span>FSRS</span></div><div class="project-links"><a class="text-link" href="https://tobyberry666.github.io/ielts-graded-vocab/" target="_blank" rel="noopener noreferrer">试用一下 <span aria-hidden="true">↗</span></a><a class="text-link secondary-link" href="https://github.com/tobyberry666/ielts-graded-vocab" target="_blank" rel="noopener noreferrer">源代码 <span aria-hidden="true">↗</span></a></div></div><span class="scene-note mono">CURIOSITY IS A DAILY PRACTICE.</span></section>
-      <footer class="scene scene-connect" id="connect" aria-labelledby="connect-title" tabindex="-1"><div class="scene-inner connect-copy"><p class="chapter-kicker mono">06 / STILL CURIOUS</p><h2 id="connect-title">下一次好奇，<br>会写出<span class="accent-lime">什么？</span></h2><p class="body-copy">答案还没写好。继续探索，继续创造。</p><a class="github-link" href="https://github.com/tobyberry666" target="_blank" rel="noopener noreferrer">在 GitHub 找到我 <span aria-hidden="true">↗</span></a><a class="restart-link" href="#home">再逛一次 <span aria-hidden="true">↺</span></a></div><span class="outro-word" aria-hidden="true">stay<br><i>curious.</i></span><span class="scene-note mono">BUILT WITH CURIOSITY. / TOBY</span></footer>
+
+      <section class="scene scene-home" id="home" aria-labelledby="hero-title" tabindex="-1">
+        <div class="scene-inner hero-copy">
+          <p class="chapter-kicker mono"><i class="status-dot"></i>00 / A PERSONAL EXHIBITION</p>
+          <p class="eyebrow">你好，我是</p>
+          <h1 id="hero-title">Toby<span>.</span></h1>
+          <p class="hero-subtitle">把好奇写成代码。<br>也给生活，留一点<span>即兴。</span></p>
+          <a class="text-link magnet" href="#about">走进这场展览 <span aria-hidden="true">↗</span></a>
+          <p class="hero-meta mono">PROGRAMMING × HCI × AFFECTIVE COMPUTING</p>
+        </div>
+        <figure class="portrait-figure">
+          <picture>
+            <source type="image/webp" srcset="assets/images/portrait-560.webp 560w, assets/images/portrait-900.webp 900w, assets/images/portrait-1400.webp 1400w" sizes="(max-width: 780px) 92vw, 44vw">
+            <img src="assets/images/portrait-900.jpg" srcset="assets/images/portrait-560.jpg 560w, assets/images/portrait-900.jpg 900w, assets/images/portrait-1400.jpg 1400w" sizes="(max-width: 780px) 92vw, 44vw" width="900" height="1239" alt="Toby 在客厅桌边用滤网给玻璃壶倒茶，身穿印字白 T 恤，身后是暖白墙面与花卉挂画。" decoding="async" fetchpriority="high">
+          </picture>
+          <figcaption class="portrait-caption mono">TEA, POURED SLOWLY / 生活的一面</figcaption>
+        </figure>
+        <button class="egg-trigger" type="button" aria-expanded="false" aria-controls="egg-panel" hidden>
+          <span class="egg-dot" aria-hidden="true"></span>还有另一面 <span aria-hidden="true">↘</span>
+        </button>
+      </section>
+
+      <section class="scene scene-build" id="about" aria-labelledby="about-title" tabindex="-1">
+        <div class="scene-inner about-copy">
+          <p class="chapter-kicker mono">01 / FOLLOW THE CURIOSITY</p>
+          <h2 id="about-title">把好奇，<br>写成<span class="accent">代码。</span></h2>
+          <p class="body-copy">我是 Toby，一名热爱编程与计算机的在读学生。喜欢拆解问题，也喜欢把日常需求写成小工具，在动手实践中学习。</p>
+          <ul class="interest-tags"><li>写代码</li><li>做工具</li><li>拆解问题</li></ul>
+        </div>
+        <div class="build-aside" aria-hidden="true">
+          <p class="aside-line mono">THINK → BUILD → LEARN → REPEAT</p>
+          <p class="aside-big">make it<br><i>happen.</i></p>
+          <p class="aside-note">不问能不能，先动手。</p>
+        </div>
+      </section>
+
+      <section class="scene scene-feel" id="feel" aria-labelledby="feel-title" tabindex="-1">
+        <div class="scene-inner feel-copy">
+          <p class="chapter-kicker mono">02 / HCI × AFFECTIVE COMPUTING</p>
+          <h2 id="feel-title">探索交互，<br>理解<span class="accent">感受。</span></h2>
+          <p class="body-copy">现在学习和研究人机交互（HCI）与情感计算，关注交互体验，以及技术如何感知、理解和回应情绪。</p>
+          <p class="feel-aside">我的探索还在继续：读论文、拆解思路，再把想法实现成小工具。</p>
+          <p class="scholarship-note">曾获校级二等奖学金</p>
+        </div>
+        <div class="feel-aside-art" aria-hidden="true">
+          <span class="feel-symbol">~</span>
+          <p class="mono">A LITTLE MORE HUMAN.</p>
+        </div>
+        <a class="chapter-bridge text-link magnet" href="#work">想法，开始成形 <span aria-hidden="true">↗</span></a>
+      </section>
+
+      <section class="scene scene-project scene-paper" id="work" aria-labelledby="paper-title" tabindex="-1">
+        <div class="project-art paper-art" aria-hidden="true"><div class="project-tilt">
+          <div class="paper-window project-visual"><div class="window-bar"><span>↗ PAPER HIGHLIGHTS</span><span>arXiv / HTML</span></div><div class="paper-content"><span class="mock-kicker">READ BETWEEN THE LINES</span><div class="paper-title">A little more clarity.<br>A little less noise.</div><div class="mock-line long"></div><div class="mock-line"></div><div class="highlight-line red-line"></div><div class="mock-line long"></div><div class="highlight-line sand-line"></div><div class="mock-line"></div><div class="paper-tags"><span>问题</span><span>机制</span><span>证据</span><span>局限</span></div></div></div>
+          </div><span class="schematic mono">CONCEPT VIEW / 界面示意</span><span class="paper-mark">✳</span>
+        </div>
+        <div class="scene-inner project-copy">
+          <p class="chapter-kicker mono">03 / IDEAS BECOME THINGS</p>
+          <span class="project-number mono">01 / READING TOOL</span>
+          <h3 id="paper-title">Paper<br> Highlights<span aria-hidden="true">↗</span></h3>
+          <p class="body-copy">让论文阅读，多一点线索。面向 arXiv HTML 的浏览器扩展，配合兼容的模型 API，辅助识别问题、机制、证据与局限。</p>
+          <ul class="project-tags"><li>浏览器扩展</li><li>论文阅读</li></ul>
+          <a class="text-link magnet" href="https://github.com/tobyberry666/paper-highlighter" target="_blank" rel="noopener noreferrer">查看项目 <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+
+      <section class="scene scene-project scene-code" id="code" aria-labelledby="code-title" tabindex="-1">
+        <div class="project-art code-art" aria-hidden="true"><div class="project-tilt"><div class="code-window project-visual"><div class="window-bar"><span>CODE VISUALIER</span><span>● ● ●</span></div><div class="code-content"><div class="code-lines"><div><span>1</span> <b>items</b> = [2, 4, 6]</div><div><span>2</span> total = 0</div><div class="active-code"><span>3</span> <em>for</em> item <em>in</em> items:</div><div><span>4</span> &nbsp; total += item</div></div><div class="snapshot"><span class="mono">VARIABLE SNAPSHOT</span><div class="variable"><span>item</span><strong>4</strong></div><div class="variable"><span>total</span><strong>6</strong></div></div></div><div class="code-steps"><span>01</span><i></i><span class="current">02</span><i></i><span>03</span><i></i><span>04</span></div></div></div><span class="schematic mono">CONCEPT VIEW / 执行过程示意</span></div>
+        <div class="scene-inner project-copy">
+          <p class="chapter-kicker mono">04 / MAKE THE INVISIBLE VISIBLE</p>
+          <span class="project-number mono">02 / DEVELOPER TOOL</span>
+          <h3 id="code-title">Code<br> Visualier<span aria-hidden="true">↗</span></h3>
+          <p class="body-copy">不只看代码，也看看它如何运行。把执行步骤与变量快照放在一起，让变化更直观；Python 与 JavaScript 可在客户端运行。</p>
+          <ul class="project-tags"><li>代码可视化</li><li>Python / JS</li></ul>
+          <a class="text-link magnet" href="https://github.com/tobyberry666/code-visualier" target="_blank" rel="noopener noreferrer">查看项目 <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+
+      <section class="scene scene-project scene-vocab" id="vocab" aria-labelledby="vocab-title" tabindex="-1">
+        <div class="project-art vocab-art" aria-hidden="true"><div class="project-tilt"><div class="vocab-ring"></div><div class="vocab-card project-visual"><div class="window-bar"><span>WORDS, ONE AT A TIME</span><span>↗</span></div><span class="vocab-category mono">A LITTLE DAILY PRACTICE</span><strong class="vocab-word">curiosity<span> /ˌkjʊəriˈɒsəti/</span></strong><p class="vocab-meaning">n. 好奇心；求知欲</p><div class="vocab-rule"></div><p class="vocab-sentence">Stay curious.<br>Keep discovering.</p><div class="vocab-bottom"><span>分级学习</span><span>FSRS 复习</span></div></div></div><span class="schematic mono">CONCEPT VIEW / 单词卡片示意</span><span class="vocab-mark">✳</span></div>
+        <div class="scene-inner project-copy">
+          <p class="chapter-kicker mono">05 / SMALL STEPS, EVERY DAY</p>
+          <span class="project-number mono">03 / LEARNING TOOL</span>
+          <h3 id="vocab-title">IELTS<br> Graded Vocab<span aria-hidden="true">↗</span></h3>
+          <p class="body-copy">让词汇学习有自己的节奏。分级积累 IELTS 词汇，用 FSRS 安排复习，把记忆练习融入日常。</p>
+          <ul class="project-tags"><li>词汇学习</li><li>FSRS</li></ul>
+          <div class="project-links"><a class="text-link magnet" href="https://tobyberry666.github.io/ielts-graded-vocab/" target="_blank" rel="noopener noreferrer">试用一下 <span aria-hidden="true">↗</span></a><a class="text-link secondary-link" href="https://github.com/tobyberry666/ielts-graded-vocab" target="_blank" rel="noopener noreferrer">源代码 <span aria-hidden="true">↗</span></a></div>
+        </div>
+      </section>
+
+      <footer class="scene scene-connect" id="connect" aria-labelledby="connect-title" tabindex="-1">
+        <div class="scene-inner connect-copy">
+          <p class="chapter-kicker mono">06 / STILL CURIOUS</p>
+          <h2 id="connect-title">下一次好奇，<br>会写出<span class="accent">什么？</span></h2>
+          <p class="body-copy">答案还没写好。继续探索，继续创造。</p>
+          <a class="github-link magnet" href="https://github.com/tobyberry666" target="_blank" rel="noopener noreferrer">在 GitHub 找到我 <span aria-hidden="true">↗</span></a>
+          <a class="restart-link" href="#home">再逛一次 <span aria-hidden="true">↺</span></a>
+        </div>
+        <span class="outro-word" aria-hidden="true">stay<br><i>curious.</i></span>
+      </footer>
+
     </div>
-    <div class="journey-dock"><div class="journey-caption"><span class="chapter-count mono" aria-hidden="true">01 / 07</span><span class="chapter-name">你好，世界。</span></div><nav class="chapter-nav" aria-label="探索章节"><a href="#home" aria-label="首页"><span></span></a><a href="#about" aria-label="个人介绍与编程兴趣"><span></span></a><a href="#feel" aria-label="人机交互与情感计算"><span></span></a><a href="#work" aria-label="Paper Highlights"><span></span></a><a href="#code" aria-label="Code Visualier"><span></span></a><a href="#vocab" aria-label="IELTS Graded Vocab"><span></span></a><a href="#connect" aria-label="连接"><span></span></a></nav><span class="journey-hint">滚动探索 <span aria-hidden="true">→</span></span><div class="journey-progress" aria-hidden="true"><i></i></div></div>
+    <div class="journey-dock">
+      <div class="journey-caption"><span class="chapter-count mono" aria-hidden="true">01 / 07</span><span class="chapter-name">你好，世界。</span></div>
+      <nav class="chapter-nav" aria-label="探索章节"><a href="#home" aria-label="首页"><span></span></a><a href="#about" aria-label="个人介绍与编程兴趣"><span></span></a><a href="#feel" aria-label="人机交互与情感计算"><span></span></a><a href="#work" aria-label="Paper Highlights"><span></span></a><a href="#code" aria-label="Code Visualier"><span></span></a><a href="#vocab" aria-label="IELTS Graded Vocab"><span></span></a><a href="#connect" aria-label="连接"><span></span></a></nav>
+      <span class="journey-hint">滚动探索 <span aria-hidden="true">→</span></span>
+      <div class="journey-progress" aria-hidden="true"><i></i></div>
+    </div>
   </div></main>
+
+  <dialog class="egg-panel" id="egg-panel" aria-labelledby="egg-title">
+    <button class="egg-close" type="button" aria-label="关闭">×</button>
+    <picture><source type="image/webp" srcset="assets/images/easter-egg-420.webp 420w, assets/images/easter-egg-760.webp 760w" sizes="(max-width: 600px) 78vw, 380px"><img src="assets/images/easter-egg-420.jpg" srcset="assets/images/easter-egg-420.jpg 420w, assets/images/easter-egg-760.jpg 760w" sizes="(max-width: 600px) 78vw, 380px" width="420" height="635" alt="Toby 敷着深灰色面膜的近景自拍。" loading="lazy"></picture>
+    <p class="egg-caption" id="egg-title">另一面的 Toby。<br><span class="mono">SELF-CARE IS ALSO A PROJECT.</span></p>
+  </dialog>
 </body></html>

@@ -1,6 +1,36 @@
 (() => {
   'use strict';
+
+  // The photo easter egg is progressive enhancement: it must never break the page.
+  const setupEgg = () => {
+    try {
+      const trigger = document.querySelector('.egg-trigger');
+      const panel = document.getElementById('egg-panel');
+      if (!trigger || !panel) return;
+      trigger.hidden = false;
+      const closer = panel.querySelector('.egg-close');
+      const open = () => {
+        if (typeof panel.showModal === 'function') panel.showModal();
+        else panel.setAttribute('open', '');
+        trigger.setAttribute('aria-expanded', 'true');
+        if (closer) closer.focus();
+      };
+      const close = () => {
+        if (panel.open && typeof panel.close === 'function') panel.close();
+        else panel.removeAttribute('open');
+        trigger.setAttribute('aria-expanded', 'false');
+        trigger.focus({ preventScroll: true });
+      };
+      trigger.addEventListener('click', open);
+      if (closer) closer.addEventListener('click', close);
+      panel.addEventListener('close', () => trigger.setAttribute('aria-expanded', 'false'));
+      panel.addEventListener('keydown', event => { if (event.key === 'Escape') { event.preventDefault(); close(); } });
+    } catch {
+      // Silent by design: the page must stay usable when the dialog cannot be wired.
+    }
+  };
   if (!window.gsap || !window.ScrollTrigger) return;
+  setupEgg();
   gsap.registerPlugin(ScrollTrigger);
   const media = gsap.matchMedia();
   let lastProgress = null;
@@ -48,6 +78,9 @@
       const count = document.querySelector('.chapter-count');
       const caption = document.querySelector('.chapter-name');
       const names = ['你好，世界。', '把好奇写成代码。', '人机交互 × 情感计算', 'Paper Highlights', 'Code Visualier', 'IELTS Graded Vocab', '继续保持好奇。'];
+      // Warm white opens; the three project chapters and the outro ride into charcoal.
+      const colors = ['#F1EDE5', '#F1EDE5', '#EDE7DC', '#1C1B19', '#1C1B19', '#1C1B19', '#1C1B19'];
+      const darkFrom = 3;
       const cleanup = [];
       let active = -1;
       let navigation;
@@ -60,26 +93,11 @@
       };
 
       const ambient = gsap.timeline({ repeat: -1, yoyo: true })
-        .to('.orb-breathe', { y: 7, scale: 1.025, duration: 3.6, ease: 'sine.inOut' }, 0)
-        .to('.field-cross', { rotation: 35, y: -12, duration: 3.6, ease: 'sine.inOut' }, 0);
-      const orbit = gsap.to('.orbit-back', { rotation: 360, transformOrigin: '50% 50%', duration: 65, repeat: -1, ease: 'none' });
-      const star = gsap.to('.field-star', { rotation: 360, duration: 45, repeat: -1, ease: 'none' });
-      const thread = gsap.to('.thread path', { strokeDashoffset: -300, duration: 30, repeat: -1, ease: 'none' });
-      const decorations = [ambient, orbit, star, thread];
-      const cardMotion = scenes.map((scene) => {
-        const decoration = scene.querySelector('.paper-star, .vocab-asterisk, .active-code');
-        if (!decoration) return null;
-        return gsap.to(decoration, {
-          y: scene.id === 'code' ? 2 : -10,
-          rotation: scene.id === 'code' ? 0 : 10,
-          duration: 2.8, repeat: -1, yoyo: true, ease: 'sine.inOut', paused: true
-        });
-      });
+        .to('.field-mark', { rotation: 40, y: -10, duration: 5.2, ease: 'sine.inOut' }, 0);
+      const decorations = [ambient];
+
       const syncAmbient = () => {
         decorations.forEach(animation => document.hidden ? animation.pause() : animation.resume());
-        cardMotion.forEach((animation, index) => {
-          if (animation) index === active && !document.hidden ? animation.resume() : animation.pause();
-        });
       };
       listen(document, 'visibilitychange', syncAmbient);
 
@@ -88,12 +106,13 @@
         const index = Math.round(progress * (scenes.length - 1));
         if (index === active) return;
         active = index;
+        root.classList.toggle('is-dark', index >= darkFrom);
         count.textContent = `${String(index + 1).padStart(2, '0')} / 07`;
         caption.textContent = names[index];
         chapterLinks.forEach((link, i) => i === index ? link.setAttribute('aria-current', 'step') : link.removeAttribute('aria-current'));
         headerLinks.forEach(link => {
           const target = link.getAttribute('href');
-          const selected = target === '#about' ? index === 1 || index === 2 : target === '#work' ? index >= 3 && index <= 5 : index === 6;
+          const selected = target === '#about' ? index === 1 : target === '#feel' ? index === 2 : target === '#work' ? index >= 3 && index <= 5 : index === 6;
           selected ? link.setAttribute('aria-current', 'true') : link.removeAttribute('aria-current');
         });
         syncAmbient();
@@ -112,33 +131,29 @@
       });
       const travel = () => window.innerWidth * (scenes.length - 1);
       camera.to('.rail', { x: () => -travel(), duration: scenes.length - 1 }, 0)
-        .to('.thread', { x: () => -travel() * 0.91, duration: scenes.length - 1 }, 0)
+        .to('.seam', { x: () => -travel(), duration: scenes.length - 1 }, 0)
         .to('.journey-progress i', { scaleX: 1, duration: scenes.length - 1 }, 0)
-        .to('.field-ring', { rotation: 95, x: -120, duration: scenes.length - 1 }, 0);
+        .to('.field-rule', { x: () => window.innerWidth * 6, duration: scenes.length - 1 }, 0);
 
-      const colors = ['#201e28', '#24232d', '#292330', '#292531', '#202b2b', '#302724', '#24272b'];
-      const orbStops = mobile
-        ? [[0, 0, 1, 0], [0.04, 0.02, 0.43, -30], [0.2, -0.02, 0.18, 20], [0.2, 0.13, 0.16, 110], [0.2, 0.13, 0.16, 200], [0.2, 0.13, 0.16, 300], [-0.12, -0.03, 0.85, 360]]
-        : [[0, 0, 1, 0], [0.07, 0.21, 0.46, -35], [0.01, 0, 0.73, 20], [-0.55, 0.33, 0.18, 100], [-0.55, 0.33, 0.18, 200], [-0.55, 0.33, 0.18, 290], [0.02, 0.01, 0.9, 360]];
       scenes.forEach((scene, index) => {
         if (!index) return;
-        const [x, y, scale, rotation] = orbStops[index];
         camera.to('.viewport', { backgroundColor: colors[index], duration: 1 }, index - 1)
-          .to('.shared-orb', {
-            x: () => x * window.innerWidth, y: () => y * window.innerHeight,
-            scale, rotation, opacity: mobile && index >= 3 && index <= 5 ? 0 : 1,
-            duration: 1, ease: 'power1.inOut'
-          }, index - 1)
-          .fromTo(scene.querySelector('.scene-inner'), { x: mobile ? 20 : 65, y: 35 }, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, index - 0.8);
+          .fromTo(scene.querySelector('.scene-inner'), { x: mobile ? 20 : 60, y: 30 }, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, index - 0.8);
         const art = scene.querySelector('.project-art');
-        if (art) camera.fromTo(art, { y: 70, rotation: 5, scale: 0.94 }, { y: 0, rotation: 0, scale: 1, duration: 1, ease: 'power2.out' }, index - 1);
+        if (art) camera.fromTo(art, { y: 70, rotation: 4, scale: 0.95 }, { y: 0, rotation: 0, scale: 1, duration: 1, ease: 'power2.out' }, index - 1);
       });
-      camera.fromTo('.brace-left', { x: -40, rotation: -12 }, { x: 0, rotation: 0, duration: 1 }, 0)
-        .fromTo('.brace-right', { x: 40, rotation: 12 }, { x: 0, rotation: 0, duration: 1 }, 0)
-        .to('.emotion-ring', { rotation: '+=110', duration: 2 }, 1)
-        .to('.emotion-dot', { x: mobile ? 55 : 120, y: 65, duration: 2 }, 1)
-        .to('.art-bracket', { rotation: 55, transformOrigin: '50% 50%', duration: 6 }, 0)
-        .to('.art-spark', { rotation: -150, transformOrigin: '50% 50%', duration: 6 }, 0);
+
+      // The portrait enters with the hero and drifts on scroll, slower than the type.
+      const portrait = document.querySelector('.portrait-figure');
+      if (portrait && !mobile) {
+        camera.fromTo(portrait, { y: 46, scale: 1.04 }, { y: 0, scale: 1, duration: 1, ease: 'power2.out' }, 0)
+          .to(portrait, { y: -34, duration: 1.2, ease: 'none' }, 0.2);
+      }
+      // Every extra tween must finish inside 0 .. scenes.length-1, otherwise the
+      // timeline grows and the rail overshoots its position for the chapter.
+      camera.fromTo('.aside-big', { y: 40, opacity: 0.4 }, { y: 0, opacity: 1, duration: 0.9, ease: 'power2.out' }, 0.1)
+        .to('.feel-symbol', { y: -40, rotation: 8, duration: 1.4, ease: 'none' }, 1.1)
+        .to('.outro-word', { y: -30, duration: 1.4, ease: 'none' }, 4.6);
 
       if (pointer) {
         const setters = [];
@@ -147,30 +162,47 @@
           setters.push(setter);
           return setter;
         };
-        const orbX = quick('.orb-pointer', 'x');
-        const orbY = quick('.orb-pointer', 'y');
-        const orbRotate = quick('.orb-pointer', 'rotation', 1.1);
-        const wordsX = quick('.orbit-words', 'x', 1.2);
-        const wordsY = quick('.orbit-words', 'y', 1.2);
-        const fieldX = quick('.field', 'x', 1.4);
-        const fieldY = quick('.field', 'y', 1.4);
+        const makeSetter = (selector, property, strength, duration) => {
+          const node = document.querySelector(selector);
+          return node ? { set: quick(node, property, duration), strength } : null;
+        };
+        const parallax = [
+          makeSetter('.portrait-figure', 'x', -16, 1.3),
+          makeSetter('.portrait-figure', 'y', -12, 1.3),
+          makeSetter('.field-mark', 'x', -26, 1.5),
+          makeSetter('.field-mark', 'y', -20, 1.5),
+          makeSetter('.outro-word', 'x', -18, 1.5)
+        ].filter(Boolean);
         listen(viewport, 'pointermove', event => {
           const x = event.clientX / window.innerWidth - 0.5;
           const y = event.clientY / window.innerHeight - 0.5;
-          orbX(x * 70); orbY(y * 55); orbRotate(x * 12);
-          wordsX(-x * 32); wordsY(-y * 24); fieldX(-x * 18); fieldY(-y * 16);
+          parallax.forEach(({ set, strength }) => set(x * strength));
         }, { passive: true });
-        listen(viewport, 'pointerleave', () => [orbX, orbY, orbRotate, wordsX, wordsY, fieldX, fieldY].forEach(setter => setter(0)));
+        listen(viewport, 'pointerleave', () => parallax.forEach(({ set }) => set(0)));
+
+        // Magnetic pull on primary links, without stealing the click target's layout.
+        document.querySelectorAll('.magnet').forEach(link => {
+          const mx = quick(link, 'x', 0.5);
+          const my = quick(link, 'y', 0.5);
+          listen(link, 'pointermove', event => {
+            const rect = link.getBoundingClientRect();
+            mx((event.clientX - rect.left - rect.width / 2) * 0.22);
+            my((event.clientY - rect.top - rect.height / 2) * 0.28);
+          }, { passive: true });
+          listen(link, 'pointerleave', () => { mx(0); my(0); });
+        });
+
         document.querySelectorAll('.project-art').forEach(art => {
           const tilt = art.querySelector('.project-tilt');
+          if (!tilt) return;
           const tiltX = quick(tilt, 'rotationX', 0.65);
           const tiltY = quick(tilt, 'rotationY', 0.65);
           let rect;
           listen(art, 'pointerenter', () => { rect = art.getBoundingClientRect(); });
           listen(art, 'pointermove', event => {
             if (!rect) return;
-            tiltX(-((event.clientY - rect.top) / rect.height - 0.5) * 12);
-            tiltY(((event.clientX - rect.left) / rect.width - 0.5) * 16);
+            tiltX(-((event.clientY - rect.top) / rect.height - 0.5) * 11);
+            tiltY(((event.clientX - rect.left) / rect.width - 0.5) * 15);
           }, { passive: true });
           listen(art, 'pointerleave', () => { tiltX(0); tiltY(0); });
         });
@@ -240,14 +272,14 @@
       return () => {
         cancelNavigation();
         cleanup.forEach(remove => remove());
-        root.classList.remove('is-immersive');
+        root.classList.remove('is-immersive', 'is-dark');
         [...chapterLinks, ...headerLinks].forEach(link => link.removeAttribute('aria-current'));
         count.textContent = '01 / 07'; caption.textContent = names[0];
       };
     });
   } catch (error) {
     media.revert();
-    document.documentElement.classList.remove('is-immersive');
+    document.documentElement.classList.remove('is-immersive', 'is-dark');
     console.warn('Motion enhancement unavailable; the page remains readable.', error);
   }
 })();

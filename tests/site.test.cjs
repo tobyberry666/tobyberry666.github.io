@@ -17,7 +17,31 @@ test('page contains no private contact links or identifying biography labels', (
   assert.ok(!/(?:mailto:|tel:|tencent:|wpa\.qq\.com)/i.test(html), 'Private contact links must be absent');
   assert.ok(!/(?:真实姓名|学号|班级|学院|大学|实验室|辅导员|联系电话|电子邮箱|QQ号码|专业排名|班长|学生会)/.test(html), 'Identifying biography labels must be absent');
   assert.ok(!/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(html), 'Email addresses must be absent');
-  assert.ok(!/(?:data:image|<img\b)/i.test(html), 'Portraits and embedded image material must be absent');
+});
+
+test('the two approved portraits are local, described and pre-sized', () => {
+  assert.ok(!/data:image/i.test(html), 'Photos must be real files, not inlined data URLs');
+  const images = [...html.matchAll(/<img\b[^>]*>/g)].map((m) => attributes(m[0]));
+  assert.ok(images.length >= 2, 'The approved tea photo and the easter-egg photo must both appear');
+  for (const img of images) {
+    assert.ok(/^assets\/images\/[\w-]+\.jpg$/.test(img.src || ''), `Photo must be a local asset: ${img.src}`);
+    assert.ok((img.alt || '').length >= 8, 'Every photo needs a meaningful alternative text');
+    assert.ok(Number(img.width) > 0 && Number(img.height) > 0, 'Photos need intrinsic dimensions to avoid layout shift');
+  }
+  const sources = [...html.matchAll(/<source\b[^>]*>/g)].map((m) => attributes(m[0]));
+  assert.ok(sources.some((s) => s.type === 'image/webp'), 'A WebP source should be offered');
+});
+
+test('the extra photo is reachable by click and keyboard, not by hover only', () => {
+  const trigger = html.match(/<button[^>]*class="egg-trigger"[^>]*>/)?.[0];
+  assert.ok(trigger, 'The easter egg needs a real button');
+  const attrs = attributes(trigger);
+  assert.equal(attrs.type, 'button');
+  assert.equal(attrs['aria-controls'], 'egg-panel');
+  assert.equal(attrs['aria-expanded'], 'false');
+  const panel = html.match(/<dialog[^>]*id="egg-panel"[^>]*>/)?.[0];
+  assert.ok(panel, 'The photo opens in a dialog');
+  assert.ok(/<button[^>]*class="egg-close"[^>]*aria-label="关闭"/.test(html), 'The dialog needs a labelled close control');
 });
 
 test('all local assets resolve inside the site and runtime assets stay local', () => {

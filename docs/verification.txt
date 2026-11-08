@@ -1,0 +1,32 @@
+--- desktop 1440x900, animation on ---
+PASS  immersive mode engaged
+PASS  seven chapters present
+PASS  hero photo loaded  633x872
+--- keyboard: Tab reaches the easter-egg button ---
+PASS  easter-egg button is focusable and visible
+--- easter egg opens by activation (not hover) ---
+PASS  dialog opens on activation
+PASS  aria-expanded flipped to true
+PASS  focus moved inside the dialog
+PASS  easter-egg photo loads once the dialog opens  380px
+--- Escape closes and returns focus ---
+PASS  Escape closes the dialog
+PASS  aria-expanded back to false
+PASS  focus restored to the trigger
+--- chapter navigation via the dock ---
+PASS  dock link scrolls to the Paper Highlights chapter  {"progress":0.5,"workLeft":0,"hash":"#work","current":"04 / 07"}
+PASS  chapter counter follows  04 / 07
+--- dark chrome on project scenes ---
+PASS  dark class applied on project chapter
+--- reduced motion ---
+PASS  reduced motion falls back to the reading layout  scrollHeight=5735
+PASS  all seven chapters still render
+PASS  portrait still visible without animation
+PASS  document is vertically scrollable  5735px
+--- mobile 390x844 ---
+PASS  no horizontal overflow on mobile  overflowX=0
+PASS  portrait sized for the column  342px
+PASS  easter egg still reachable on mobile
+PASS  chapter nav present on mobile
+--- 320x568 ---
+PASS  no horizontal overflow at 320px  overflowX=0
