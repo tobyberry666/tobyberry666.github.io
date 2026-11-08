@@ -1,32 +1,79 @@
---- desktop 1440x900, animation on ---
-PASS  immersive mode engaged
-PASS  seven chapters present
-PASS  hero photo loaded  633x872
---- keyboard: Tab reaches the easter-egg button ---
-PASS  easter-egg button is focusable and visible
---- easter egg opens by activation (not hover) ---
-PASS  dialog opens on activation
-PASS  aria-expanded flipped to true
-PASS  focus moved inside the dialog
-PASS  easter-egg photo loads once the dialog opens  380px
---- Escape closes and returns focus ---
-PASS  Escape closes the dialog
-PASS  aria-expanded back to false
-PASS  focus restored to the trigger
---- chapter navigation via the dock ---
-PASS  dock link scrolls to the Paper Highlights chapter  {"progress":0.5,"workLeft":0,"hash":"#work","current":"04 / 07"}
-PASS  chapter counter follows  04 / 07
---- dark chrome on project scenes ---
-PASS  dark class applied on project chapter
---- reduced motion ---
-PASS  reduced motion falls back to the reading layout  scrollHeight=5735
-PASS  all seven chapters still render
-PASS  portrait still visible without animation
-PASS  document is vertically scrollable  5735px
---- mobile 390x844 ---
-PASS  no horizontal overflow on mobile  overflowX=0
-PASS  portrait sized for the column  342px
-PASS  easter egg still reachable on mobile
-PASS  chapter nav present on mobile
---- 320x568 ---
-PASS  no horizontal overflow at 320px  overflowX=0
+Toby 主页浏览器验证记录
+生成时间：2026-11-08T14:26:03.377Z
+预览：http://127.0.0.1:4173/
+浏览器：本机 Chrome（headless，DevTools 协议）
+实际断言：51 项，PASS 51，FAIL 0
+
+说明：可见性 = 元素矩形完整落在视口内，且其中心点 elementFromPoint 命中自身或其后代；
+交互一律用真实键盘/鼠标事件（Input.dispatchKeyEvent / dispatchMouseEvent），不调用 .click()。
+
+## 1440×900 沉浸模式
+PASS  页面进入沉浸模式
+PASS  七个章节
+PASS  首屏人像真实加载  — 633px
+PASS  七章底部导航圆点均可见且可命中  — 7/7
+PASS  七章章节计数均可见且可命中  — 7/7
+PASS  每章都精确对齐到视口左边  — 第1章 left=0 第2章 left=0 第3章 left=0 第4章 left=0 第5章 left=0 第6章 left=0 第7章 left=0
+PASS  真实鼠标点击第 5 个圆点跳到 Code Visualier  — {"hash":"#code","left":0,"count":"05 / 07"}
+
+## 键盘操作
+PASS  Enter 激活章节链接可跳转  — {"hash":"#feel","left":0}
+PASS  彩蛋按钮在首屏可见且可命中  — {"ok":true,"inside":true,"hit":true,"rect":[694,729,86,211],"vw":1440,"vh":900,"top":"egg-trigger"}
+PASS  真实 Tab 能到达彩蛋按钮  — 第 6 次 Tab
+PASS  Enter 打开照片对话框  — {"open":true,"expanded":"true","inside":true}
+PASS  打开后焦点进入对话框
+PASS  对话框照片实际加载  — 380px
+PASS  Escape 关闭对话框  — {"open":false,"expanded":"false","back":true}
+PASS  关闭后焦点回到彩蛋按钮
+
+## 鼠标视差与倾斜
+PASS  水平鼠标移动驱动水平视差  — x=-6.44 y=0.00
+PASS  仅纵向移动鼠标驱动纵向视差  — y 0.00 → 4.40
+PASS  纵向移动时水平位移基本不变  — x -6.44 → -6.44
+PASS  鼠标在项目卡片上移动产生倾斜变化  — matrix3d(0.996927, 0, 0.0783342, 0, -0.00450923, 0.998342, 0.0573871, 0, -0.0782043, -0.057564, 0.995274, 0, 0, 0, 0, 1) → matrix3d(0.996905, 0, -0.0786099, 0, -0.00452511, 0.998342, -0.0573859, 0, 0.0784796, 0.057564, 0.995252, 0, 0, 0, 0, 1)
+
+## 初始深链
+PASS  #work 初始深链定位正确  — {"hash":"#work","left":0,"count":"04 / 07"}
+
+## 1440×600 矮屏
+PASS  矮屏不启用横向沉浸，改为纵向阅读  — scrollHeight=4560
+PASS  矮屏作品入口可滚动到达且可命中  — {"ok":true,"inside":true,"hit":true,"rect":[276,325,954,1054],"vw":1440,"vh":600,"top":"text-link magnet"}
+
+## 390×844 手机
+PASS  390px 不启用横向沉浸
+PASS  390px 无横向溢出  — overflowX=0
+PASS  390px 正文占满可用列  — 342px / 390px
+PASS  390px 首屏人像 可滚动到达并可见可命中  — {"ok":true,"inside":true,"hit":true,"rect":[304,539,24,366],"vw":390,"vh":844,"top":"IMG"}
+PASS  390px 首屏彩蛋按钮 可滚动到达并可见可命中  — {"ok":true,"inside":true,"hit":true,"rect":[404,439,24,149],"vw":390,"vh":844,"top":"egg-trigger"}
+PASS  390px 作品章节正文 可滚动到达并可见可命中  — {"ok":true,"inside":true,"hit":true,"rect":[382,462,24,366],"vw":390,"vh":844,"top":"body-copy"}
+PASS  390px 作品章节入口 可滚动到达并可见可命中  — {"ok":true,"inside":true,"hit":true,"rect":[397,446,24,124],"vw":390,"vh":844,"top":"text-link magnet"}
+PASS  390px 联系页 GitHub 入口 可滚动到达并可见可命中  — {"ok":true,"inside":true,"hit":true,"rect":[397,446,24,207],"vw":390,"vh":844,"top":"github-link magnet"}
+PASS  390px 项目"界面示意"标识可见  — {"ok":true,"inside":true,"hit":true,"rect":[417,427,24,366],"vw":390,"vh":844,"top":"schematic mono"}
+
+## 320×568 手机
+PASS  320px 不启用横向沉浸
+PASS  320px 无横向溢出  — overflowX=0
+PASS  320px 正文占满可用列  — 284px / 320px
+PASS  320px 首屏人像 可滚动到达并可见可命中  — {"ok":true,"inside":true,"hit":true,"rect":[187,382,18,302],"vw":320,"vh":568,"top":"IMG"}
+PASS  320px 首屏彩蛋按钮 可滚动到达并可见可命中  — {"ok":true,"inside":true,"hit":true,"rect":[267,302,18,143],"vw":320,"vh":568,"top":"egg-trigger"}
+PASS  320px 作品章节正文 可滚动到达并可见可命中  — {"ok":true,"inside":true,"hit":true,"rect":[245,324,18,302],"vw":320,"vh":568,"top":"body-copy"}
+PASS  320px 作品章节入口 可滚动到达并可见可命中  — {"ok":true,"inside":true,"hit":true,"rect":[259,308,18,118],"vw":320,"vh":568,"top":"text-link magnet"}
+PASS  320px 联系页 GitHub 入口 可滚动到达并可见可命中  — {"ok":true,"inside":true,"hit":true,"rect":[278,327,18,201],"vw":320,"vh":568,"top":"github-link magnet"}
+PASS  320px 项目"界面示意"标识可见  — {"ok":true,"inside":true,"hit":true,"rect":[279,289,18,302],"vw":320,"vh":568,"top":"schematic mono"}
+
+## 视口切换保持进度
+PASS  桌面→手机→桌面切换后回到同一章节  — 04 / 07 → 04 / 07
+
+## 减少动态效果
+PASS  减少动态时改用纵向阅读布局  — scrollHeight=5739
+PASS  减少动态时七章仍然渲染
+PASS  减少动态时人像可到达可命中  — {"ok":true,"inside":true,"hit":true,"rect":[124,759,794,1354],"vw":1440,"vh":900,"top":"IMG"}
+PASS  减少动态时作品入口可到达可命中  — {"ok":true,"inside":true,"hit":true,"rect":[425,474,954,1054],"vw":1440,"vh":900,"top":"text-link magnet"}
+PASS  减少动态时彩蛋按钮可到达可命中  — {"ok":true,"inside":true,"hit":true,"rect":[433,468,86,211],"vw":1440,"vh":900,"top":"egg-trigger"}
+
+## 无动画库时彩蛋
+PASS  动画库确实未加载  — {"gsap":false,"st":false,"immersive":false,"eggHidden":false} 拦截 2 个请求
+PASS  无动画库时不进入沉浸模式，页面仍可纵向阅读
+PASS  无动画库时彩蛋按钮不被隐藏
+PASS  无动画库时彩蛋按钮可见可命中  — {"ok":true,"inside":true,"hit":true,"rect":[433,468,86,211],"vw":1440,"vh":900,"top":"egg-trigger"}
+PASS  无动画库时真实点击可打开照片对话框  — {"open":true,"expanded":"true"}

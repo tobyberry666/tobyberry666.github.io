@@ -1,7 +1,8 @@
 (() => {
   'use strict';
 
-  // The photo easter egg is progressive enhancement: it must never break the page.
+  // The photo easter egg depends on nothing but the DOM, so it must be wired before
+  // any animation-library check. It stays inert until the button is actually used.
   const setupEgg = () => {
     try {
       const trigger = document.querySelector('.egg-trigger');
@@ -26,11 +27,11 @@
       panel.addEventListener('close', () => trigger.setAttribute('aria-expanded', 'false'));
       panel.addEventListener('keydown', event => { if (event.key === 'Escape') { event.preventDefault(); close(); } });
     } catch {
-      // Silent by design: the page must stay usable when the dialog cannot be wired.
+      // The button stays hidden when the dialog cannot be wired; the page stays usable.
     }
   };
-  if (!window.gsap || !window.ScrollTrigger) return;
   setupEgg();
+  if (!window.gsap || !window.ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
   const media = gsap.matchMedia();
   let lastProgress = null;
@@ -44,19 +45,30 @@
 
   try {
     media.add({
-      desktop: '(min-width: 601px)',
-      mobile: '(max-width: 600px)',
+      // The horizontal journey needs a wide, tall-enough viewport. It matches the
+      // 780px CSS breakpoint exactly, so layout and motion never disagree.
+      immersive: '(min-width: 781px) and (min-height: 620px)',
+      desktop: '(min-width: 781px)',
+      mobile: '(max-width: 780px)',
       pointer: '(hover: hover) and (pointer: fine)',
-      roomy: '(min-height: 620px), (max-width: 600px) and (min-height: 520px)',
+      roomy: '(min-height: 620px)',
       reduced: '(prefers-reduced-motion: reduce)'
     }, (context) => {
-      const { mobile, pointer, reduced, roomy } = context.conditions;
-      if (reduced || !roomy) {
+      const { mobile, pointer, reduced, immersive } = context.conditions;
+      if (reduced || !immersive) {
         readingLayout = true;
         readingIndex = null;
+        const sections = [...document.querySelectorAll('.scene')];
+        // Leaving the horizontal journey resets the document scroll to the top. Put the
+        // reader back on the chapter they were viewing so switching to a phone layout
+        // and back does not silently restart the page.
+        if (lastProgress !== null) {
+          const index = Math.round(lastProgress * (sections.length - 1));
+          readingIndex = index;
+          window.scrollTo(0, window.scrollY + sections[index].getBoundingClientRect().top);
+        }
         const rememberReading = () => {
           if (rebuilding) return;
-          const sections = [...document.querySelectorAll('.scene')];
           readingIndex = sections.reduce((best, scene, index) => Math.abs(scene.getBoundingClientRect().top) < Math.abs(sections[best].getBoundingClientRect().top) ? index : best, 0);
         };
         window.addEventListener('scroll', rememberReading, { passive: true });
@@ -162,21 +174,25 @@
           setters.push(setter);
           return setter;
         };
-        const makeSetter = (selector, property, strength, duration) => {
+        // Each entry names the axis of pointer input that drives it, so vertical mouse
+        // movement produces vertical parallax instead of repeating the horizontal one.
+        const makeSetter = (selector, property, axis, strength, duration) => {
           const node = document.querySelector(selector);
-          return node ? { set: quick(node, property, duration), strength } : null;
+          return node ? { set: quick(node, property, duration), axis, strength } : null;
         };
+        // Scroll animates .portrait-figure; the pointer moves .portrait-inner. Two
+        // different elements, so no single transform property has two writers.
         const parallax = [
-          makeSetter('.portrait-figure', 'x', -16, 1.3),
-          makeSetter('.portrait-figure', 'y', -12, 1.3),
-          makeSetter('.field-mark', 'x', -26, 1.5),
-          makeSetter('.field-mark', 'y', -20, 1.5),
-          makeSetter('.outro-word', 'x', -18, 1.5)
+          makeSetter('.portrait-inner', 'x', 'x', -16, 1.3),
+          makeSetter('.portrait-inner', 'y', 'y', -12, 1.3),
+          makeSetter('.field-mark', 'x', 'x', -26, 1.5),
+          makeSetter('.field-mark', 'y', 'y', -20, 1.5),
+          makeSetter('.outro-word', 'x', 'x', -18, 1.5)
         ].filter(Boolean);
         listen(viewport, 'pointermove', event => {
           const x = event.clientX / window.innerWidth - 0.5;
           const y = event.clientY / window.innerHeight - 0.5;
-          parallax.forEach(({ set, strength }) => set(x * strength));
+          parallax.forEach(({ set, axis, strength }) => set((axis === 'y' ? y : x) * strength));
         }, { passive: true });
         listen(viewport, 'pointerleave', () => parallax.forEach(({ set }) => set(0)));
 

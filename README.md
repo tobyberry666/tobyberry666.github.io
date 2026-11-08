@@ -29,9 +29,11 @@ node tests/motion.test.cjs
 浏览器端行为验证与截图（需要本机 Chrome，脚本通过 DevTools 协议驱动，先启动 `preview.cjs`）：
 
 ```sh
-node tools/verify.cjs   # 32 项交互与降级检查，结果写入 docs/verification.txt
+node tools/verify.cjs   # 51 项实际断言，结果写入 docs/verification.txt
 node tools/shoot.cjs    # 桌面/手机/矮屏/reduced-motion 截图，写入 docs/screenshots/
 ```
+
+`verify.cjs` 只统计真实断言（不把标题计入）：可见性以「元素矩形完整落在视口内，且中心点 `elementFromPoint` 命中自身」为准；交互一律发送真实 `Input.dispatchKeyEvent` / `dispatchMouseEvent`，不调用 `.click()`。
 
 ## 素材
 
@@ -53,6 +55,6 @@ python tools/make-assets.py
 
 GSAP 3.15.0 与 ScrollTrigger 复用现有本机文件，存放于 `assets/vendor/`，保留上游许可说明。原生滚动推进七个横向章节，背景由暖白连续过渡到炭黑；底部圆点和顶部导航可直接切换章节，键盘焦点也会带入对应场景。
 
-开启减少动态效果、桌面视口高度小于 620px、手机视口高度小于 520px 或动画库不可用时，采用可正常滚动阅读的纵向布局，七章内容、人像与彩蛋均可访问。后台标签页暂停环境动画，跨手机／桌面布局切换保留探索进度。无需劫持滚轮或强制吸附。
+开启减少动态效果、视口窄于 781px、桌面视口高度小于 620px 或动画库不可用时，采用可正常滚动阅读的纵向布局，七章内容、人像与彩蛋均可访问。手机上人像、正文、项目入口与彩蛋都按内容高度排布，可以正常滚动到达。后台标签页暂停环境动画，跨手机／桌面布局切换保留探索进度。无需劫持滚轮或强制吸附。
 
 公开内容使用昵称、在读学生身份、编程兴趣、人机交互与情感计算方向和简短奖学金信息；隐去学校与实验室。项目图形为概念示意。旧版图片及识别性介绍已从旧版本移除；本次由用户明确授权加入两张本人照片。

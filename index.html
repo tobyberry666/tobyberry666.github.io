@@ -27,17 +27,19 @@
           <p class="hero-subtitle">把好奇写成代码。<br>也给生活，留一点<span>即兴。</span></p>
           <a class="text-link magnet" href="#about">走进这场展览 <span aria-hidden="true">↗</span></a>
           <p class="hero-meta mono">PROGRAMMING × HCI × AFFECTIVE COMPUTING</p>
+          <button class="egg-trigger" type="button" aria-expanded="false" aria-controls="egg-panel" hidden>
+            <span class="egg-dot" aria-hidden="true"></span>还有另一面 <span aria-hidden="true">↘</span>
+          </button>
         </div>
         <figure class="portrait-figure">
-          <picture>
-            <source type="image/webp" srcset="assets/images/portrait-560.webp 560w, assets/images/portrait-900.webp 900w, assets/images/portrait-1400.webp 1400w" sizes="(max-width: 780px) 92vw, 44vw">
-            <img src="assets/images/portrait-900.jpg" srcset="assets/images/portrait-560.jpg 560w, assets/images/portrait-900.jpg 900w, assets/images/portrait-1400.jpg 1400w" sizes="(max-width: 780px) 92vw, 44vw" width="900" height="1239" alt="Toby 在客厅桌边用滤网给玻璃壶倒茶，身穿印字白 T 恤，身后是暖白墙面与花卉挂画。" decoding="async" fetchpriority="high">
-          </picture>
-          <figcaption class="portrait-caption mono">TEA, POURED SLOWLY / 生活的一面</figcaption>
+          <div class="portrait-inner">
+            <picture>
+              <source type="image/webp" srcset="assets/images/portrait-560.webp 560w, assets/images/portrait-900.webp 900w, assets/images/portrait-1400.webp 1400w" sizes="(max-width: 780px) 92vw, 44vw">
+              <img src="assets/images/portrait-900.jpg" srcset="assets/images/portrait-560.jpg 560w, assets/images/portrait-900.jpg 900w, assets/images/portrait-1400.jpg 1400w" sizes="(max-width: 780px) 92vw, 44vw" width="900" height="1239" alt="Toby 在客厅桌边用滤网给玻璃壶倒茶，身穿印字白 T 恤，身后是暖白墙面与花卉挂画。" decoding="async" fetchpriority="high">
+            </picture>
+            <figcaption class="portrait-caption mono">TEA, POURED SLOWLY / 生活的一面</figcaption>
+          </div>
         </figure>
-        <button class="egg-trigger" type="button" aria-expanded="false" aria-controls="egg-panel" hidden>
-          <span class="egg-dot" aria-hidden="true"></span>还有另一面 <span aria-hidden="true">↘</span>
-        </button>
       </section>
 
       <section class="scene scene-build" id="about" aria-labelledby="about-title" tabindex="-1">
@@ -70,9 +72,12 @@
       </section>
 
       <section class="scene scene-project scene-paper" id="work" aria-labelledby="paper-title" tabindex="-1">
+        <div class="project-figure">
         <div class="project-art paper-art" aria-hidden="true"><div class="project-tilt">
           <div class="paper-window project-visual"><div class="window-bar"><span>↗ PAPER HIGHLIGHTS</span><span>arXiv / HTML</span></div><div class="paper-content"><span class="mock-kicker">READ BETWEEN THE LINES</span><div class="paper-title">A little more clarity.<br>A little less noise.</div><div class="mock-line long"></div><div class="mock-line"></div><div class="highlight-line red-line"></div><div class="mock-line long"></div><div class="highlight-line sand-line"></div><div class="mock-line"></div><div class="paper-tags"><span>问题</span><span>机制</span><span>证据</span><span>局限</span></div></div></div>
-          </div><span class="schematic mono">CONCEPT VIEW / 界面示意</span><span class="paper-mark">✳</span>
+          </div><span class="paper-mark" aria-hidden="true">✳</span>
+        </div>
+        <p class="schematic mono">CONCEPT VIEW / 界面示意</p>
         </div>
         <div class="scene-inner project-copy">
           <p class="chapter-kicker mono">03 / IDEAS BECOME THINGS</p>
@@ -85,7 +90,10 @@
       </section>
 
       <section class="scene scene-project scene-code" id="code" aria-labelledby="code-title" tabindex="-1">
-        <div class="project-art code-art" aria-hidden="true"><div class="project-tilt"><div class="code-window project-visual"><div class="window-bar"><span>CODE VISUALIER</span><span>● ● ●</span></div><div class="code-content"><div class="code-lines"><div><span>1</span> <b>items</b> = [2, 4, 6]</div><div><span>2</span> total = 0</div><div class="active-code"><span>3</span> <em>for</em> item <em>in</em> items:</div><div><span>4</span> &nbsp; total += item</div></div><div class="snapshot"><span class="mono">VARIABLE SNAPSHOT</span><div class="variable"><span>item</span><strong>4</strong></div><div class="variable"><span>total</span><strong>6</strong></div></div></div><div class="code-steps"><span>01</span><i></i><span class="current">02</span><i></i><span>03</span><i></i><span>04</span></div></div></div><span class="schematic mono">CONCEPT VIEW / 执行过程示意</span></div>
+        <div class="project-figure">
+        <div class="project-art code-art" aria-hidden="true"><div class="project-tilt"><div class="code-window project-visual"><div class="window-bar"><span>CODE VISUALIER</span><span>● ● ●</span></div><div class="code-content"><div class="code-lines"><div><span>1</span> <b>items</b> = [2, 4, 6]</div><div><span>2</span> total = 0</div><div class="active-code"><span>3</span> <em>for</em> item <em>in</em> items:</div><div><span>4</span> &nbsp; total += item</div></div><div class="snapshot"><span class="mono">VARIABLE SNAPSHOT</span><div class="variable"><span>item</span><strong>4</strong></div><div class="variable"><span>total</span><strong>6</strong></div></div></div><div class="code-steps"><span>01</span><i></i><span class="current">02</span><i></i><span>03</span><i></i><span>04</span></div></div></div></div>
+        <p class="schematic mono">CONCEPT VIEW / 执行过程示意</p>
+        </div>
         <div class="scene-inner project-copy">
           <p class="chapter-kicker mono">04 / MAKE THE INVISIBLE VISIBLE</p>
           <span class="project-number mono">02 / DEVELOPER TOOL</span>
@@ -97,7 +105,10 @@
       </section>
 
       <section class="scene scene-project scene-vocab" id="vocab" aria-labelledby="vocab-title" tabindex="-1">
-        <div class="project-art vocab-art" aria-hidden="true"><div class="project-tilt"><div class="vocab-ring"></div><div class="vocab-card project-visual"><div class="window-bar"><span>WORDS, ONE AT A TIME</span><span>↗</span></div><span class="vocab-category mono">A LITTLE DAILY PRACTICE</span><strong class="vocab-word">curiosity<span> /ˌkjʊəriˈɒsəti/</span></strong><p class="vocab-meaning">n. 好奇心；求知欲</p><div class="vocab-rule"></div><p class="vocab-sentence">Stay curious.<br>Keep discovering.</p><div class="vocab-bottom"><span>分级学习</span><span>FSRS 复习</span></div></div></div><span class="schematic mono">CONCEPT VIEW / 单词卡片示意</span><span class="vocab-mark">✳</span></div>
+        <div class="project-figure">
+        <div class="project-art vocab-art" aria-hidden="true"><div class="project-tilt"><div class="vocab-ring"></div><div class="vocab-card project-visual"><div class="window-bar"><span>WORDS, ONE AT A TIME</span><span>↗</span></div><span class="vocab-category mono">A LITTLE DAILY PRACTICE</span><strong class="vocab-word">curiosity<span> /ˌkjʊəriˈɒsəti/</span></strong><p class="vocab-meaning">n. 好奇心；求知欲</p><div class="vocab-rule"></div><p class="vocab-sentence">Stay curious.<br>Keep discovering.</p><div class="vocab-bottom"><span>分级学习</span><span>FSRS 复习</span></div></div></div><span class="vocab-mark" aria-hidden="true">✳</span></div>
+        <p class="schematic mono">CONCEPT VIEW / 单词卡片示意</p>
+        </div>
         <div class="scene-inner project-copy">
           <p class="chapter-kicker mono">05 / SMALL STEPS, EVERY DAY</p>
           <span class="project-number mono">03 / LEARNING TOOL</span>
