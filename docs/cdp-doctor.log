@@ -6,23 +6,23 @@
 +0.00s chrome exists: true
 +0.00s chrome path: C:\Program Files\Google\Chrome\Application\chrome.exe
 +0.02s port 9525 free (ECONNREFUSED)
-+0.02s spawn: chrome --headless=new --disable-gpu --no-sandbox --hide-scrollbars --disable-dev-shm-usage --no-first-run --no-default-browser-check --disable-crash-reporter --remote-debugging-port=9525 --user-data-dir=C:\Users\Toby\AppData\Local\Temp\toby-doctor-1794148968943 about:blank
-+0.29s /json/list ok after 2 attempts (259ms): 5 targets, page ws=ws://127.0.0.1:9525/devtools/page/DBD4B0290E36383896B193FE88BEE27E
-+0.29s WebSocket open
-+0.29s --- CDP sequence ---
-+0.29s   -> Page.enable
-+0.29s   <- Page.enable answered in 2ms
-+0.29s   -> Runtime.enable
-+0.29s   <- Runtime.enable answered in 1ms
-+0.29s   -> DOM.enable
-+0.29s   <- DOM.enable answered in 0ms
-+0.29s   -> Page.navigate
-+0.30s   <- Page.navigate answered in 6ms
-+0.30s navigate returned frameId=DBD4B0290E36383896B193FE88BEE27E errorText=none
++0.02s spawn: chrome --headless=new --disable-gpu --no-sandbox --hide-scrollbars --disable-dev-shm-usage --no-first-run --no-default-browser-check --disable-crash-reporter --remote-debugging-port=9525 --user-data-dir=C:\Users\Toby\AppData\Local\Temp\toby-doctor-1794150276492 about:blank
++0.29s /json/list ok after 2 attempts (265ms): 5 targets, page ws=ws://127.0.0.1:9525/devtools/page/87541AF7DF8BAE31D331181902666C11
++0.30s WebSocket open
++0.30s --- CDP sequence ---
++0.30s   -> Page.enable
++0.30s   <- Page.enable answered in 2ms
++0.30s   -> Runtime.enable
++0.30s   <- Runtime.enable answered in 1ms
++0.30s   -> DOM.enable
++0.30s   <- DOM.enable answered in 1ms
++0.30s   -> Page.navigate
++0.31s   <- Page.navigate answered in 5ms
++0.31s navigate returned frameId=87541AF7DF8BAE31D331181902666C11 errorText=none
 +2.81s   -> Runtime.evaluate
-+2.81s   <- Runtime.evaluate answered in 0ms
++2.81s   <- Runtime.evaluate answered in 1ms
 +2.81s page title: "Toby — 代码与感受"
 +2.81s   -> Page.captureScreenshot
-+2.84s   <- Page.captureScreenshot answered in 37ms
++2.84s   <- Page.captureScreenshot answered in 28ms
 +2.84s screenshot bytes: 25125
 +2.84s === result: SESSION OK ===
