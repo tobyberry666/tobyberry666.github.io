@@ -29,11 +29,22 @@ node tests/motion.test.cjs
 浏览器端行为验证与截图（需要本机 Chrome，脚本通过 DevTools 协议驱动，先启动 `preview.cjs`）：
 
 ```sh
-node tools/verify.cjs   # 51 项实际断言，结果写入 docs/verification.txt
-node tools/shoot.cjs    # 桌面/手机/矮屏/reduced-motion 截图，写入 docs/screenshots/
+node tools/cdp-doctor.cjs   # 先确认浏览器会话可用，结果写入 docs/cdp-doctor.log
+node tools/verify.cjs       # 51 项实际断言，结果写入 docs/verification.txt
+node tools/shoot.cjs        # 23 张截图写入 docs/screenshots/
 ```
 
 `verify.cjs` 只统计真实断言（不把标题计入）：可见性以「元素矩形完整落在视口内，且中心点 `elementFromPoint` 命中自身」为准；交互一律发送真实 `Input.dispatchKeyEvent` / `dispatchMouseEvent`，不调用 `.click()`。
+
+### 浏览器会话起不来时先跑 cdp-doctor
+
+`cdp-doctor.cjs` 逐步记录进程启动、调试端口、`/json/list` 目标、WebSocket 握手和每条 CDP 命令的耗时，用来区分三种情况：浏览器根本没起来、起来了但没有页面目标、或者是起来了但 DevTools 命令不返回。它约 3 秒完成，日志在 `docs/cdp-doctor.log`。
+
+常见阻塞与对应处理：
+
+- `debugger port ... is already in use`：上一次被中断的 Chrome 还占着端口，新实例无法绑定，`/json/list` 会返回那个旧实例。换端口即可：`CDP_PORT=9500 node tools/verify.cjs`。
+- 日志停在某条命令且 Chrome stderr 里出现 `mojo ... Access is denied`：执行环境不允许浏览器建立自己的进程间通道，这不是页面问题，需要放开对 Chrome 的进程/IPC 限制后重跑。
+- 没有 Chrome stderr 但命令不回：先确认没有杀毒或策略软件拦截 `--remote-debugging-port`。
 
 ## 素材
 

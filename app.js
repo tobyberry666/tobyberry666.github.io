@@ -57,22 +57,28 @@
       const { mobile, pointer, reduced, immersive } = context.conditions;
       if (reduced || !immersive) {
         readingLayout = true;
-        readingIndex = null;
         const sections = [...document.querySelectorAll('.scene')];
         // Leaving the horizontal journey resets the document scroll to the top. Put the
         // reader back on the chapter they were viewing so switching to a phone layout
         // and back does not silently restart the page.
         if (lastProgress !== null) {
-          const index = Math.round(lastProgress * (sections.length - 1));
-          readingIndex = index;
-          window.scrollTo(0, window.scrollY + sections[index].getBoundingClientRect().top);
+          readingIndex = Math.round(lastProgress * (sections.length - 1));
+          window.scrollTo(0, window.scrollY + sections[readingIndex].getBoundingClientRect().top);
         }
-        const rememberReading = () => {
-          if (rebuilding) return;
+        // Capture the chapter once, when this layout is torn down. A live scroll listener
+        // fires while the viewport is resizing, and the momentary scrollY of 0 overwrote
+        // the chapter with "first" - that was the regression this replaces. Only a real
+        // move of the document (the reader scrolled) may update the chapter.
+        let baselineY = null;
+        const captureReading = () => {
+          const y = window.scrollY;
+          if (y <= 0) return;
+          if (baselineY === null) return;
+          if (Math.abs(y - baselineY) < 8) return;
           readingIndex = sections.reduce((best, scene, index) => Math.abs(scene.getBoundingClientRect().top) < Math.abs(sections[best].getBoundingClientRect().top) ? index : best, 0);
         };
-        window.addEventListener('scroll', rememberReading, { passive: true });
-        return () => window.removeEventListener('scroll', rememberReading);
+        baselineY = window.scrollY;
+        return () => captureReading();
       }
       let resumeProgress = lastProgress;
 

@@ -115,6 +115,20 @@ async function main() {
       await sleep(2200);
     };
 
+    // Anchors the frame on a chapter by its element, which is what the reading layout
+    // needs: there is no ScrollTrigger range to interpolate on phones.
+    const scrollToSection = async (id, offset = 0) => {
+      await cdp.send('Runtime.evaluate', {
+        expression: `(() => {
+          const el = document.getElementById(${JSON.stringify(id)});
+          if (!el) return null;
+          window.scrollTo(0, Math.round(window.scrollY + el.getBoundingClientRect().top) + ${offset});
+          return Math.round(window.scrollY);
+        })()`,
+        returnByValue: true,
+      });
+      await sleep(1200);
+    };
     // --- desktop immersive ---
     await viewport(1440, 900);
     await load(BASE);
@@ -142,16 +156,21 @@ async function main() {
     await sleep(400);
 
     // --- mobile ---
+    // The phone layout is a normal vertical document, so each frame is anchored on its
+    // chapter element rather than on a scroll fraction.
     await viewport(390, 844, true);
     await load(BASE);
     await sleep(1200);
     await shoot(cdp, 'mobile-390-01-hero');
-    for (const [name, fraction] of [
-      ['mobile-390-02-about', 1 / 6],
-      ['mobile-390-04-work', 3 / 6],
-      ['mobile-390-07-connect', 1],
+    for (const [name, id] of [
+      ['mobile-390-02-about', 'about'],
+      ['mobile-390-03-feel', 'feel'],
+      ['mobile-390-04-work', 'work'],
+      ['mobile-390-05-code', 'code'],
+      ['mobile-390-06-vocab', 'vocab'],
+      ['mobile-390-07-connect', 'connect'],
     ]) {
-      await scrollTo(fraction);
+      await scrollToSection(id);
       await shoot(cdp, name);
     }
 
@@ -160,16 +179,20 @@ async function main() {
     await load(BASE);
     await sleep(1200);
     await shoot(cdp, 'mobile-320-01-hero');
-    await scrollTo(3 / 6);
+    await scrollToSection('work');
     await shoot(cdp, 'mobile-320-04-work');
+    await scrollToSection('code');
+    await shoot(cdp, 'mobile-320-05-code');
 
     // --- short desktop ---
     await viewport(1440, 600);
     await load(BASE);
     await sleep(1200);
     await shoot(cdp, 'desktop-short-1440x600-hero');
-    await scrollTo(3 / 6);
+    await scrollToSection('work');
     await shoot(cdp, 'desktop-short-1440x600-work');
+    await scrollToSection('connect');
+    await shoot(cdp, 'desktop-short-1440x600-connect');
 
     // --- reading layout (reduced motion emulation) ---
     await cdp.send('Emulation.setEmulatedMedia', {

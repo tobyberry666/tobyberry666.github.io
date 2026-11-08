@@ -18,7 +18,8 @@ const path = require('node:path');
 const CHROME = process.env.CHROME_BIN || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 const BASE = process.env.PREVIEW_URL || 'http://127.0.0.1:4173/';
 const OUT = path.resolve(__dirname, '..', 'docs', 'verification.txt');
-const PORT = 9411 + (process.pid % 200);
+// Override with CDP_PORT when another session may be holding the default port.
+const PORT = Number(process.env.CDP_PORT || 9411 + (process.pid % 200));
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const results = [];
@@ -50,13 +51,35 @@ class CDP {
 }
 
 async function launch() {
+  // A leftover Chrome from an interrupted run keeps answering on this port, and a new
+  // --remote-debugging-port would silently not bind: /json/list then returns the stale
+  // instance, whose commands never answer. Detect and move, rather than hang.
+  try {
+    const probe = await fetch(`http://127.0.0.1:${PORT}/json/version`, { signal: AbortSignal.timeout(1500) });
+    if (probe.ok) {
+      throw new Error(`debugger port ${PORT} is already in use by another Chrome; re-run with CDP_PORT set to a free port`);
+    }
+  } catch (error) {
+    if (error.message?.includes('already in use')) throw error;
+    // Not answering: the port is ours to take.
+  }
+
   const profile = path.join(process.env.TEMP || '.', `toby-verify-${Date.now()}`);
   const proc = spawn(CHROME, [
     '--headless=new', '--disable-gpu', '--no-sandbox', '--hide-scrollbars',
     '--disable-dev-shm-usage', '--no-first-run', '--no-default-browser-check',
     '--disable-crash-reporter', `--remote-debugging-port=${PORT}`,
     `--user-data-dir=${profile}`, 'about:blank'
-  ], { stdio: 'ignore' });
+  ], { stdio: ['ignore', 'pipe', 'pipe'] });
+
+  // Chrome reports sandbox/IPC refusals only on stderr. Keeping them is what turns
+  // "timeout Page.enable" into a diagnosable cause instead of a mystery.
+  const chromeStderr = [];
+  proc.stderr.on('data', (d) => {
+    const line = d.toString().trim();
+    if (line) chromeStderr.push(line);
+  });
+  proc.on('error', (e) => chromeStderr.push(`spawn error: ${e.message}`));
 
   // Chrome can take a while on a cold profile; retry well past the first attempt.
   for (let i = 0; i < 120; i++) {
@@ -69,17 +92,18 @@ async function launch() {
           ws.addEventListener('open', resolve, { once: true });
           ws.addEventListener('error', () => reject(new Error('ws error')), { once: true });
         });
-        return { proc, cdp: new CDP(ws), ws };
+        return { proc, cdp: new CDP(ws), ws, chromeStderr };
       }
     } catch { /* not ready yet */ }
     await sleep(250);
   }
   proc.kill();
-  throw new Error('Chrome DevTools did not become reachable');
+  const tail = chromeStderr.slice(-8).join('\n  ');
+  throw new Error(`Chrome DevTools did not become reachable on port ${PORT}${tail ? '\n  chrome stderr:\n  ' + tail : ''}`);
 }
 
 (async () => {
-  const { proc, cdp, ws } = await launch();
+  const { proc, cdp, ws, chromeStderr } = await launch();
   try {
     await cdp.send('Page.enable', {}, 60000);
     await cdp.send('Runtime.enable', {}, 60000);
@@ -408,4 +432,10 @@ async function launch() {
   console.log(`\n实际断言 ${checks.length} 项：PASS ${passed}，FAIL ${failed}`);
   console.log(`记录写入 ${OUT}`);
   process.exitCode = failed ? 1 : 0;
-})().catch((e) => { console.error('verify failed:', e.message); process.exit(1); });
+})().catch((e) => {
+  console.error('verify failed:', e.message);
+  console.error('\nIf the message above mentions Page.enable timing out, the browser started but');
+  console.error('refused DevTools traffic. Run `node tools/cdp-doctor.cjs` to see where the');
+  console.error('session stops; its log keeps the Chrome stderr lines that name the cause.');
+  process.exit(1);
+});
